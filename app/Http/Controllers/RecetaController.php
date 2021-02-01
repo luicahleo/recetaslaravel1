@@ -13,8 +13,10 @@ class RecetaController extends Controller
 {
 
     // Contructor para proteger URL con el middleware
+    // Con esta function constructor le decimos que solo accedan los usuarios autenticados, excepto el metodo show, que
+    // quiero que sea publico, para que puedan ver usuario no autenticados
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'show']);
 
     }
 
@@ -26,7 +28,9 @@ class RecetaController extends Controller
      */
     public function index()
     {
-        return view('recetas.index');
+        $recetas = auth()->user()->recetas;
+
+        return view('recetas.index', compact('recetas'));
     }
 
     /**
@@ -119,7 +123,9 @@ class RecetaController extends Controller
      */
     public function edit(Receta $receta)
     {
-        //
+        $categorias = CategoriaReceta::all(['id','nombre']);
+
+        return view('recetas.edit', compact('categorias','receta'));
     }
 
     /**
@@ -131,7 +137,50 @@ class RecetaController extends Controller
      */
     public function update(Request $request, Receta $receta)
     {
-        //
+        // Revisa el policy
+        $this->authorize('update',$receta);
+
+        // Validamos el formulario de Crear Receta
+        $data = $request->validate([
+            'titulo' => 'required|min:6',
+            'preparacion' => 'required',
+            'ingredientes' => 'required',
+            'categoria' => 'required',
+        ]);
+
+        // Actualizamos la variable $receta, porque es quien tiene toda la informacion
+        $receta->titulo = $data['titulo'];
+        $receta->preparacion = $data['preparacion'];
+        $receta->ingredientes = $data['ingredientes'];
+        $receta->categoria_id = $data['categoria'];
+
+        // ahora detectamos si el usuario a subido una nueva imagem
+        if (request('imagen')) {
+            // Obtener la ruta de la imagen
+            $ruta_imagen =  $request['imagen']->store('upload-recetas','public' );
+
+            // Resize de la imagen
+            $img = Image::make( public_path("storage/{$ruta_imagen}"))->fit(1000, 550);
+            $img->save();
+
+        // agregamos al objeto
+            $receta->imagen = $ruta_imagen;
+
+        }
+
+
+
+        $receta->save();
+
+
+        // redireccionar para que la pantalla no se quede en blanco
+        return redirect()->action('RecetaController@index');
+
+
+
+
+
+
     }
 
     /**
