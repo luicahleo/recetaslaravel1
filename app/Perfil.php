@@ -10,6 +10,6 @@ class Perfil extends Model
      es como si pusieramos Perfil::find(1)    esto nos trae el usuario
      */
     public function usuario(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
