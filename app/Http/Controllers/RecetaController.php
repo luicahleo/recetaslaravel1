@@ -14,7 +14,7 @@ class RecetaController extends Controller
 
     // Contructor para proteger URL con el middleware
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except'=>'show']);
 
     }
 

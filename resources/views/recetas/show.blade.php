@@ -29,7 +29,7 @@
             <p>
                 <span class="font-weight-bold text-primary">Autor:</span>
                 <a class="text-dark" href="">
-                    {{ $receta->user_id }}
+                    {{ $receta->autor->name }}
 
                 </a>
 
