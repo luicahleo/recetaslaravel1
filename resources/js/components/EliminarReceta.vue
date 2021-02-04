@@ -15,7 +15,28 @@
         },
         methods: {
             eliminarReceta(){
-                console.log('diste click', this.recetaId);
+                this.$swal({
+                    title: '¿Deseas eliminar esta receta?',
+                    text: "Una vez eliminada, no se puede recuperar",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si',
+                    cancelButtonText: 'No'
+                }).then((result) => {
+
+                    // Enviar peticion al servidor
+
+                    if (result.isConfirmed) {
+                        this.$swal({
+                            title: 'Receta eliminada',
+                            text: 'Se elimino la receta',
+                            icon: 'success'
+                        })
+                    }
+                })
+
             }
         }
 
