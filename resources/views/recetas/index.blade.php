@@ -34,7 +34,7 @@
 {{--                            receta-id={{$receta->id}}--}}
 {{--                        ></eliminar-receta>--}}
 
-                        <a href=" " class="btn btn-dark d-block mb-2">Editar</a>
+                        <a href="{{ route('recetas.edit', ['receta' => $receta->id]) }} " class="btn btn-dark d-block mb-2">Editar</a>
                         <a href="{{ route('recetas.show', ['receta' => $receta->id]) }} " class="btn btn-success d-block">Ver</a>
                     </td>
                 </tr>
