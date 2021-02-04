@@ -10,9 +10,6 @@
 <script>
     export default {
         props: ['recetaId'],
-        mounted(){
-            console.log('receta actual', this.recetaId);
-        },
         methods: {
             eliminarReceta(){
                 this.$swal({
@@ -25,15 +22,32 @@
                     confirmButtonText: 'Si',
                     cancelButtonText: 'No'
                 }).then((result) => {
-
-                    // Enviar peticion al servidor
-
                     if (result.isConfirmed) {
-                        this.$swal({
-                            title: 'Receta eliminada',
-                            text: 'Se elimino la receta',
-                            icon: 'success'
-                        })
+                        const params = {
+                            id: this.recetaId
+                        }
+
+                        // Enviar peticion al servidor
+                        axios.post(`/recetas/${this.recetaId}`, {params, _method: 'delete'})
+                            .then(respuesta => {
+                                console.log(respuesta);
+                                this.$swal({
+                                    title: 'Receta Eliminada',
+                                    text: 'Se eliminó la receta',
+                                    icon: 'success'
+                                });
+
+                                // Eliminar receta del DOM
+                                this.$el.parentNode.parentNode.parentNode.removeChild(this.$el.parentNode.parentNode);
+
+                            })
+                            .catch(error => {
+                                console.log(error)
+                            })
+
+
+
+
                     }
                 })
 

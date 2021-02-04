@@ -181,6 +181,7 @@ class RecetaController extends Controller
      */
     public function destroy(Receta $receta)
     {
+
         // Revisar el policy
         $this->authorize('delete', $receta);
 

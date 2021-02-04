@@ -1966,9 +1966,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['recetaId'],
-  mounted: function mounted() {
-    console.log('receta actual', this.recetaId);
-  },
   methods: {
     eliminarReceta: function eliminarReceta() {
       var _this = this;
@@ -1983,12 +1980,27 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: 'Si',
         cancelButtonText: 'No'
       }).then(function (result) {
-        // Enviar peticion al servidor
         if (result.isConfirmed) {
-          _this.$swal({
-            title: 'Receta eliminada',
-            text: 'Se elimino la receta',
-            icon: 'success'
+          var params = {
+            id: _this.recetaId
+          }; // Enviar peticion al servidor
+
+          axios.post("/recetas/".concat(_this.recetaId), {
+            params: params,
+            _method: 'delete'
+          }).then(function (respuesta) {
+            console.log(respuesta);
+
+            _this.$swal({
+              title: 'Receta Eliminada',
+              text: 'Se eliminó la receta',
+              icon: 'success'
+            }); // Eliminar receta del DOM
+
+
+            _this.$el.parentNode.parentNode.parentNode.removeChild(_this.$el.parentNode.parentNode);
+          })["catch"](function (error) {
+            console.log(error);
           });
         }
       });
