@@ -8,7 +8,7 @@
 @endsection
 
 @section('content')
-    {{ $recetas }}
+{{--    {{ $recetas }}--}}
 
     <h2 class="text-center mb-5">Administra tus recetas</h2>
 
@@ -30,9 +30,9 @@
                     <td> {{$receta->categoria->nombre}} </td>
                     <td>
 
-{{--                        <eliminar-receta--}}
-{{--                            receta-id={{$receta->id}}--}}
-{{--                        ></eliminar-receta>--}}
+                        <eliminar-receta
+                            receta-id={{$receta->id}}
+                        ></eliminar-receta>
 
                         <a href="{{ route('recetas.edit', ['receta' => $receta->id]) }} " class="btn btn-dark d-block mb-2">Editar</a>
                         <a href="{{ route('recetas.show', ['receta' => $receta->id]) }} " class="btn btn-success d-block">Ver</a>
