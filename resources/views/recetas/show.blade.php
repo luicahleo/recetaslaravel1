@@ -37,6 +37,12 @@
 
             <p>
                 <span class="font-weight-bold text-primary">Fecha:</span>
+
+                @php
+                    $fecha = $receta->created_at
+                @endphp
+
+                <fecha-receta fecha="{{$fecha}}" ></fecha-receta>
             </p>
 
             <div class="ingredientes">
