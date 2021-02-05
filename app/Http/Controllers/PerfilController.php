@@ -40,10 +40,12 @@ class PerfilController extends Controller
      */
     public function update(Request $request, Perfil $perfil)
     {
+//        dd($request['imagen']);  // informacion de la imagen
+
         // Ejecutar el Policy
         //$this->authorize('update', $perfil);
 
-        // Validar
+        // Validar lo que viene del formulario de perfiles.edit.blade
         $data = request()->validate([
             'nombre' => 'required',
             'url' => 'required',
@@ -76,7 +78,7 @@ class PerfilController extends Controller
 
         // Guardar información
         // Asignar Biografia e imagen
-        auth()->user()->perfil()->update( array_merge( //une dos array, en este caso, $data y $arra_imagen
+        auth()->user()->perfil()->update( array_merge( //une dos array, en este caso, $data y $array_imagen
             $data,
             $array_imagen ?? [] //si no existe array_imagen, entonces ponle un array vacio
         ) );
