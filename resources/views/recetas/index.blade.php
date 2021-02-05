@@ -1,12 +1,7 @@
 @extends('layouts.app')
 
 @section('botones')
-
-    <a href="{{ route('recetas.create') }}" class="btn btn-outline-primary">Crear Receta</a>
-    <a href="{{ route('perfiles.edit', [ 'perfil' => Auth::user()->id ]) }}" class="btn btn-outline-success">Editar perfil</a>
-    <a href="{{ route('perfiles.show', [ 'perfil' => Auth::user()->id ]) }}" class="btn btn-outline-info">Ver perfil</a>
-
-
+    @include('ui.navegacion')
 
 @endsection
 
